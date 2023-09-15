@@ -1,4 +1,4 @@
 import { createContext } from 'react';
-import { Worker } from '../utils/types.ts';
+import { Employee } from '../utils/types.ts';
 
-export const WorkersContext = createContext<Worker[]>([]);
+export const WorkersContext = createContext<Employee[]>([]);

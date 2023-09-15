@@ -5,25 +5,25 @@ import {
   WorkersActionsContext,
   WorkersContext,
 } from '../../context';
-import { SUBSCRIPTION_OPTIONS, WorkerForm } from '../../utils/types.ts';
+import { EmployeeForm, SUBSCRIPTION_OPTIONS } from '../../utils/types.ts';
 import { DEFAULT_WORKER_FORM } from '../../utils/constants.ts';
 import { generateId } from '../../utils/helpers.ts';
 import { validateForm } from '../../utils/validation.ts';
+import { useDarkTheme } from '../../hooks';
 
-// TODO не проверяет поля которые вообще не добавлялись
+// TODO валидация
 // TODO сделать новый select
 // TODO сделать новый input number
 // TODO добавить тултип для пояснения
 
 const ControlPanel = () => {
+  const [isDarkTheme, toggleDarkTheme] = useDarkTheme();
   const { addWorker, deleteWorker, pickWorker, editWorkerData } = useContext(
     WorkersActionsContext
   );
   const activeWorkerId = useContext(ActiveWorkerIdContext);
   const workers = useContext(WorkersContext);
-  const [form, setForm] = useState<WorkerForm>(DEFAULT_WORKER_FORM);
-  const [isDark, setIsDark] = useState(true);
-
+  const [form, setForm] = useState<EmployeeForm>(DEFAULT_WORKER_FORM);
   const hasActiveWorker = activeWorkerId !== undefined;
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const ControlPanel = () => {
     } else {
       setForm(DEFAULT_WORKER_FORM);
     }
-  }, [activeWorkerId]);
+  }, [activeWorkerId, workers]);
 
   const updateFormFields = (pickedWorkerId: number) => {
     const pickedWorker = workers.find(worker => worker.id === pickedWorkerId);
@@ -54,8 +54,6 @@ const ControlPanel = () => {
 
   const handleEmploymentChange = (e: ChangeEvent<HTMLInputElement>) =>
     setForm(state => ({ ...state, ['isEmployed']: e.target.checked }));
-
-  const toggleDarkMode = () => setIsDark(state => !state);
 
   const handleDelete = () => {
     if (hasActiveWorker && deleteWorker && pickWorker) {
@@ -88,9 +86,9 @@ const ControlPanel = () => {
   };
   return (
     <div>
-      <div className="flex w-fit flex-col gap-6 rounded-md border-2 border-neutral-600 p-2 pb-4">
+      <div className="flex w-fit flex-col gap-6 rounded-md border-[1px] border-neutral-400 p-2 pb-4 dark:border-neutral-600 dark:bg-neutral-800">
         <div>
-          <div className="mb-4 w-full bg-neutral-600 px-2">
+          <div className="mb-4 w-full border-[1px] border-neutral-400 bg-neutral-300 px-2 dark:border-transparent dark:bg-neutral-600">
             <h2 className="text-l font-bold">Employee Form</h2>
           </div>
           <form
@@ -101,7 +99,7 @@ const ControlPanel = () => {
               <input
                 value={form.name ?? ''}
                 onChange={handleFormChange}
-                className="w-full rounded-md border-2 border-neutral-600 bg-neutral-800 px-2 py-1 text-white"
+                className="w-full rounded-md border-[1px] border-neutral-400 bg-neutral-200 px-2 py-1 text-black dark:border-neutral-600 dark:bg-neutral-800 dark:text-white"
                 type="text"
                 name="name"
                 placeholder="Name"
@@ -111,7 +109,7 @@ const ControlPanel = () => {
               <input
                 value={form.age ?? ''}
                 onChange={handleFormChange}
-                className="w-full rounded-md border-2 border-neutral-600 bg-neutral-800 px-2 py-1 text-white"
+                className="w-full rounded-md border-[1px] border-neutral-400 bg-neutral-200 px-2 py-1 text-black dark:border-neutral-600 dark:bg-neutral-800 dark:text-white"
                 type="number"
                 name="age"
                 placeholder="Age"
@@ -121,7 +119,7 @@ const ControlPanel = () => {
             </label>
             <label>
               <select
-                className="w-full rounded-md border-2 border-neutral-600 bg-neutral-800 px-2 py-1 text-white"
+                className="w-full cursor-pointer rounded-md border-[1px] border-neutral-400 bg-neutral-200 px-2 py-1 text-black dark:border-neutral-600 dark:bg-neutral-800 dark:text-white"
                 name="subscription"
                 onChange={handleFormChange}
                 value={form.subscription}
@@ -142,7 +140,7 @@ const ControlPanel = () => {
             {!hasActiveWorker && (
               <div className="flex min-h-[4rem] flex-col gap-4">
                 <button
-                  className="rounded-md border-none bg-neutral-600 px-2 py-1 text-white"
+                  className="cursor-pointer rounded bg-neutral-400 px-2 py-1 text-black transition-colors duration-200 hover:bg-neutral-400/80 active:bg-green-800 active:bg-green-800/60 disabled:pointer-events-none disabled:opacity-40 dark:bg-neutral-600 dark:text-white dark:hover:bg-neutral-600/80 dark:active:bg-green-800/50"
                   type="submit"
                 >
                   Add
@@ -155,14 +153,14 @@ const ControlPanel = () => {
               <button
                 disabled={!hasActiveWorker}
                 onClick={handleEdit}
-                className="rounded-md border-none bg-neutral-600 px-2 py-1 text-white transition-opacity disabled:pointer-events-none disabled:opacity-40"
+                className="cursor-pointer rounded bg-neutral-400 px-2 py-1 text-black transition-colors duration-200 hover:bg-neutral-400/80 active:bg-green-800 active:bg-green-800/60 disabled:pointer-events-none disabled:opacity-40 dark:bg-neutral-600 dark:text-white dark:hover:bg-neutral-600/80 dark:active:bg-green-800/50"
               >
                 Edit
               </button>
               <button
                 disabled={!hasActiveWorker}
                 onClick={handleDelete}
-                className="rounded-md border-none bg-neutral-600 px-2 py-1 text-white transition-opacity disabled:pointer-events-none disabled:opacity-40"
+                className="cursor-pointer rounded bg-neutral-400 px-2 py-1 text-black transition-colors duration-200 hover:bg-neutral-400/80 active:bg-green-800 active:bg-green-800/60 disabled:pointer-events-none disabled:opacity-40 dark:bg-neutral-600 dark:text-white dark:hover:bg-neutral-600/80 dark:active:bg-green-800/50"
               >
                 Delete
               </button>
@@ -171,8 +169,8 @@ const ControlPanel = () => {
         </div>
         <div className="flex flex-col gap-4">
           <Toggle
-            isChecked={isDark}
-            onChange={toggleDarkMode}
+            isChecked={isDarkTheme}
+            onChange={toggleDarkTheme}
             text="Dark Mode"
           />
         </div>

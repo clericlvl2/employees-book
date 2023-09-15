@@ -1,25 +1,29 @@
 import { useContext } from 'react';
 import { ActiveWorkerIdContext, WorkersActionsContext } from '../../../context';
-import { Worker } from '../../../utils/types.ts';
+import { Employee } from '../../../utils/types.ts';
 import { clsx } from 'clsx';
 
 export interface RowProps {
-  worker: Worker;
+  worker: Employee;
 }
 
 export const Row = ({ worker }: RowProps) => {
   const activeWorkerId = useContext(ActiveWorkerIdContext);
   const { pickWorker } = useContext(WorkersActionsContext);
+  const isActive = activeWorkerId && activeWorkerId === worker.id;
+
   const handlePick = () => {
-    const newId = activeWorkerId !== worker.id ? worker.id : undefined;
-    return pickWorker ? pickWorker(newId) : undefined;
+    const newId = isActive ? undefined : worker.id;
+    return pickWorker?.(newId);
   };
 
   return (
     <tr
       className={clsx(
-        `cursor-pointer transition-colors duration-200 hover:bg-neutral-700`,
-        activeWorkerId === worker.id && 'bg-neutral-700'
+        `cursor-pointer transition-colors duration-200`,
+        isActive
+          ? 'bg-green-700/40 dark:bg-green-900/80'
+          : 'hover:bg-neutral-700/20 dark:hover:bg-neutral-700'
       )}
       onClick={handlePick}
     >

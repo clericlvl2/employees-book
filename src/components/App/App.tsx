@@ -1,25 +1,24 @@
-import Table from '../Table/Table.tsx';
-import ControlPanel from '../ControlPanel/ControlPanel.tsx';
-import { WorkersActionsContext, WorkersContext } from '../../context';
-import { MOCK_WORKERS } from '../../utils/constants.ts';
+import {
+  ActiveWorkerIdContext,
+  WorkersActionsContext,
+  WorkersContext,
+} from '../../context';
+import { Table } from '../Table';
+import { ControlPanel } from '../ControlPanel';
 import { useWorkers } from '../../hooks';
-import { ActiveWorkerIdContext } from '../../context';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 
-// TODO продумать адаптивность
-// TODO добавить хранение в localstorage
-// TODO добавить переключение темы
-// TODO добавить брейкпоинт на 1280 как макс ширину
+// TODO адаптивность < 768px
 
 const App = () => {
-  const { workers, activeWorkerId, workersActions } = useWorkers(MOCK_WORKERS);
+  const { workers, activeWorkerId, workersActions } = useWorkers();
 
   return (
     <WorkersContext.Provider value={workers}>
       <ActiveWorkerIdContext.Provider value={activeWorkerId}>
         <WorkersActionsContext.Provider value={workersActions}>
-          <div className="flex min-h-screen flex-col gap-8">
+          <div className="flex min-h-screen flex-col gap-8 bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
             <Header />
             <main className="flex flex-grow justify-center gap-2 px-8">
               <ControlPanel />

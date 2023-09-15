@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Martian Mono';
+    src: url("./MartianMono-Bold.ttf") format('truetype');
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}

@@ -1,6 +1,6 @@
-import { Worker, WorkerForm } from './types.ts';
+import { Employee, EmployeeForm } from './types.ts';
 
-export const MOCK_WORKERS: Worker[] = [
+export const MOCK_WORKERS: Employee[] = [
   {
     id: 1,
     name: 'Jaden Smith',
@@ -31,7 +31,13 @@ export const MOCK_WORKERS: Worker[] = [
   },
 ];
 
-export const DEFAULT_WORKER_FORM: WorkerForm = {
+export const DEFAULT_WORKER_FORM: EmployeeForm = {
   subscription: 'Subscribed',
   isEmployed: false,
 };
+
+export const STORAGE_KEYS = {
+  WORKERS: 'workers',
+  THEME: 'app-theme',
+} as const;
+export const COLUMNS_COUNT = 4;
