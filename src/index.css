@@ -4,6 +4,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+
+  .scrollbar, .light-scrollbar {
+    transition: background 0.2s;
+  }
+
+  .scrollbar::-webkit-scrollbar, .light-scrollbar::-webkit-scrollbar{
+    height: 12px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: #737373;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #525252;
+    transition: background 500ms;
+    border-radius: 100vh;
+    border: 2px solid #737373;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+
+  .light-scrollbar::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background: #d4d4d4;
+  }
+
+  .light-scrollbar::-webkit-scrollbar-thumb {
+    background: #a3a3a3;
+    transition: background 500ms;
+    border-radius: 100vh;
+    border: 2px solid #d4d4d4;
+  }
+  .light-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #737373;
+  }
+}
+
+
 html,body {
   height: 100%;
 }

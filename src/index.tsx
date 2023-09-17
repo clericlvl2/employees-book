@@ -10,4 +10,3 @@ root.render(
     <App />
   </StrictMode>
 );
-export { COLUMNS_COUNT } from './utils/constants.ts';

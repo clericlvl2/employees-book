@@ -19,7 +19,7 @@ const Toggle = ({ text, isChecked, onChange }: ToggleProps) => (
         checked={isChecked}
         onChange={onChange}
       />
-      <div className="block h-6 w-12 rounded-full bg-neutral-400 transition-colors duration-300 peer-checked:bg-green-900 peer-focus:ring-2 peer-focus:ring-black dark:bg-neutral-700 dark:peer-focus:ring-white"></div>
+      <div className="block h-6 w-12 rounded-full bg-neutral-400 transition-colors duration-300 peer-checked:bg-green-900 peer-focus:ring-2 peer-focus:ring-blue-700 peer-focus:ring-offset-2 peer-focus:ring-offset-neutral-200 dark:bg-neutral-700 peer-focus:dark:ring-offset-neutral-800"></div>
       <div className="absolute left-1 top-1 h-4 w-4 rounded-full bg-neutral-300 transition peer-checked:translate-x-6 dark:bg-neutral-800"></div>
     </div>
     <span>{text}</span>

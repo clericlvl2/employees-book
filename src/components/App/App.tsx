@@ -18,7 +18,7 @@ const App = () => {
     <WorkersContext.Provider value={workers}>
       <ActiveWorkerIdContext.Provider value={activeWorkerId}>
         <WorkersActionsContext.Provider value={workersActions}>
-          <div className="flex min-h-screen flex-col gap-8 bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+          <div className="flex min-h-screen min-w-[768px] flex-col gap-8 bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
             <Header />
             <main className="flex flex-grow justify-center gap-2 px-8">
               <ControlPanel />

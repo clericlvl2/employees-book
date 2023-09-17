@@ -12,7 +12,6 @@ export const THEME_OPTIONS = ['dark', 'light', 'normal'] as const;
 export type Theme = (typeof THEME_OPTIONS)[number];
 
 export type SetValue<T> = Dispatch<SetStateAction<T>>;
-export type EmployeeForm = Partial<Omit<Employee, 'id'>>;
 
 export interface Employee {
   id: number;
@@ -20,6 +19,11 @@ export interface Employee {
   age: number;
   subscription: Subscription;
   isEmployed: boolean;
+}
+
+export interface EmployeeForm extends Omit<Employee, 'id' | 'name' | 'age'> {
+  name?: string;
+  age?: number;
 }
 
 export interface WorkerDataActions {
