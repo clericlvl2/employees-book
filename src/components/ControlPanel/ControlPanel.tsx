@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useMemo, useState } from 'react';
 import { Checkbox, NumberField, Toggle } from '../../shared';
 import {
   ActiveWorkerIdContext,
@@ -8,7 +8,7 @@ import {
 import { EmployeeForm, SUBSCRIPTION_OPTIONS } from '../../utils/types.ts';
 import {
   DEFAULT_WORKER_FORM,
-  FORM_ALERT_MESSAGE,
+  FORM_ALERT_MESSAGE, FORM_FILES_NAMES,
 } from '../../utils/constants.ts';
 import { checkSubscriptionValue, generateId } from '../../utils/helpers.ts';
 import { validateForm } from '../../utils/validation.ts';
@@ -24,6 +24,18 @@ const ControlPanel = () => {
   const [form, setForm] = useState<EmployeeForm>(DEFAULT_WORKER_FORM);
 
   const hasActiveWorker = activeWorkerId !== undefined;
+
+  const pickedWorker = useMemo(() => {
+    return workers.find(worker => worker.id === activeWorkerId) ?? null;
+  }, [activeWorkerId])
+
+  const isFormChanged = useMemo(() => {
+    if (!pickedWorker) {
+      return false;
+    }
+
+    return FORM_FILES_NAMES.some(fieldName => form[fieldName] !== pickedWorker[fieldName]);
+  }, [form, pickedWorker]);
 
   useEffect(() => {
     if (hasActiveWorker) {
@@ -148,11 +160,11 @@ const ControlPanel = () => {
           {hasActiveWorker && (
             <div className="flex min-h-[5rem] flex-col gap-4">
               <button
-                disabled={!hasActiveWorker}
+                disabled={!hasActiveWorker || !isFormChanged}
                 onClick={handleEdit}
                 className="cursor-pointer rounded bg-neutral-400 px-2 py-1 text-black transition-colors duration-200 hover:bg-neutral-400/80 active:bg-green-800 active:bg-green-800/60 disabled:pointer-events-none disabled:opacity-40 dark:bg-neutral-600 dark:text-white dark:hover:bg-neutral-600/80 dark:active:bg-green-800/50"
               >
-                Edit
+                Save
               </button>
               <button
                 disabled={!hasActiveWorker}

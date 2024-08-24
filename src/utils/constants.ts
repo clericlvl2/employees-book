@@ -31,6 +31,7 @@ export const MOCK_WORKERS: Employee[] = [
     isEmployed: false,
   },
 ];
+export const FORM_FILES_NAMES = ['name', 'age', 'subscription', 'isEmployed'] as const;
 export const DEFAULT_WORKER_FORM: EmployeeForm = {
   subscription: 'Subscribed',
   isEmployed: false,
